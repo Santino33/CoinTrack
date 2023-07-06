@@ -30,5 +30,39 @@ public class MyFile {
 
     }
 
+    public void record(String data){
+        if (bw != null){
+            try{
+                bw.write(data);
+                bw.newLine();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public String read(){
+        String cad = "";
+        try {
+            cad = br.readLine();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return cad;
+    }
 
+    public void closeFile(){
+        try{
+            if (br != null){
+                br.close();
+            }
+            if (bw != null){
+                bw.close();
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

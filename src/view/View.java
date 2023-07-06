@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import Persistance.MyFile;
 
 public class View {
     ImageIcon raton = new ImageIcon("C:/Users/willi/Programacion/Proyectos/CoinTrack/src/view/raton1.jpeg");
@@ -31,9 +32,14 @@ public class View {
         return input;
     }
 
-    public int showMenu(String table){
-
+    public int deleteItem(String message){
+        return readIntGraphicInput(message);
     }
+
+    public int readIntGraphicInput(String message) {
+        return Integer.parseInt(JOptionPane.showInputDialog(message));
+    }
+
 
 }
 

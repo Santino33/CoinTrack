@@ -17,11 +17,30 @@ public class User {
 
 
     public void addIncome(Income income) { incomesList.add(income);}
+
     public void addWaste(Waste waste) {wastesList.add(waste);}
-    public void deleteMovement(int movementId) {
-        for (int i =0; i<incomesList.size(); i++){
-            if (incomesList.get(i).getId() == movementId) incomesList.remove(incomesList.get(i));
+
+    public void deleteMovement(int movementId) throws IllegalArgumentException {
+        boolean deleted = false;
+        for (int i = 0; i < incomesList.size(); i++) {
+            if (incomesList.get(i).getId() == movementId) {
+                incomesList.remove(incomesList.get(i));
+                deleted = true;
+            }
         }
+
+        if (deleted == false){
+            for (int i = 0; i < wastesList.size(); i++) {
+                if (wastesList.get(i).getId() == movementId) {
+                    wastesList.remove(wastesList.get(i));
+                    deleted = true;
+                }
+            }
+        }
+
+        if (deleted == false) throw new IllegalArgumentException("El id del movimiento indicado no se econtró "+movementId);
     }
 
 }
+
+

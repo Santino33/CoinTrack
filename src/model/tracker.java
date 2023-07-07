@@ -1,7 +1,6 @@
 package model;
 
 import Persistance.MyFile;
-import model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,12 +8,28 @@ import java.util.HashMap;
 public class tracker {
 
     HashMap<String, User> users = new HashMap<String, User>();
+    String userName;
+    String incomesFilepath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/incomes_" + userName +".csv";
+    MyFile incomesFile = new MyFile(incomesFilepath);
+    String wastesFilepath =  "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/wastes_" + userName +".csv";
+    MyFile wastesFile = new MyFile(wastesFilepath);
+    public tracker(){
+
+    }
 
     public void registerUser(String username, String password) throws IllegalArgumentException{
         if (!users.containsKey(username)){
             ArrayList<Income> incomeList = new ArrayList<Income>();
             ArrayList<Waste> wastesList = new ArrayList<Waste>();
             users.put(username, new User(username, password, incomeList, wastesList ));
+
+            //Crear archivos CSV para guardar los movimientos
+            this.incomesFilepath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/incomes_" + username +".csv";
+            this.wastesFilepath =  "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/wastes_" + username +".csv";
+            MyFile incomesFile = new MyFile(incomesFilepath);
+            MyFile wastesFile = new MyFile(wastesFilepath);
+            incomesFile.openFile('w');
+            wastesFile.openFile('w');
         }
         else throw new IllegalArgumentException("El nombre de usuario no está disponible");
     }
@@ -26,12 +41,40 @@ public class tracker {
 
         User user = users.get(username);
         if (user.getPassword().equals(password)) {
+            this.userName = username;
             return true;  // La contraseña es correcta
         } else {
             throw new IllegalArgumentException("La contraseña no es correcta");
         }
     }
 
+    public void loadUserIncomesData(){
+        incomesFile.openFile('r');
+        String input = "";
+        String [] incomesData;
+        ArrayList<Income> incomesList = new ArrayList<Income>();
+
+        while ((input = incomesFile.read()) != null){
+            incomesData = input.split(";");
+            Income income = new Income(Short.parseShort(incomesData[0]), incomesData[1], Integer.parseInt(incomesData[2]));
+            incomesList.add(income);
+        }
+        incomesFile.closeFile();
+    }
+
+    public void loadUserWastesData(){
+        wastesFile.openFile('r');
+        String input = "";
+        String [] wastesData;
+        ArrayList<Waste> wastesList = new ArrayList<Waste>();
+
+        while ((input = incomesFile.read()) != null){
+            wastesData = input.split(";");
+            Waste waste = new Waste(Short.parseShort(wastesData[0]), wastesData[1], Integer.parseInt(wastesData[2]));
+            wastesList.add(waste);
+        }
+        wastesFile.closeFile();
+    }
 
 
     /*

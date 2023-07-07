@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class User {
     String username;
@@ -22,24 +23,33 @@ public class User {
 
     public void deleteMovement(int movementId) throws IllegalArgumentException {
         boolean deleted = false;
-        for (int i = 0; i < incomesList.size(); i++) {
-            if (incomesList.get(i).getId() == movementId) {
-                incomesList.remove(incomesList.get(i));
+
+        Iterator<Income> iterator = incomesList.iterator();
+        while (iterator.hasNext()) {
+            Movement movement = iterator.next();
+            if (movement.getId() == movementId) {
+                iterator.remove();
                 deleted = true;
+                break;  // Salir del bucle una vez que se haya eliminado el elemento
             }
         }
 
-        if (deleted == false){
-            for (int i = 0; i < wastesList.size(); i++) {
-                if (wastesList.get(i).getId() == movementId) {
-                    wastesList.remove(wastesList.get(i));
+        if (!deleted) {
+            Iterator<Waste> iterator1 = wastesList.iterator();
+            while (iterator1.hasNext()) {Movement movement = iterator1.next();
+                if (movement.getId() == movementId) {
+                    iterator1.remove();
                     deleted = true;
+                    break;  // Salir del bucle una vez que se haya eliminado el elemento
                 }
             }
         }
 
-        if (deleted == false) throw new IllegalArgumentException("El id del movimiento indicado no se econtró "+movementId);
+        if (!deleted) {
+            throw new IllegalArgumentException("El id del movimiento indicado no se encontró: " + movementId);
+        }
     }
+
 
 }
 

@@ -4,13 +4,37 @@ import Persistance.MyFile;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class tracker {
 
-    String pathFile = "C:/Users/willi/Programacion/Proyectos/CoinTrack";
+    HashMap<String, User> users = new HashMap<String, User>();
 
-    MyFile file = new MyFile(pathFile);
+    public void registerUser(String username, String password) throws IllegalArgumentException{
+        if (!users.containsKey(username)){
+            ArrayList<Income> incomeList = new ArrayList<Income>();
+            ArrayList<Waste> wastesList = new ArrayList<Waste>();
+            users.put(username, new User(username, password, incomeList, wastesList ));
+        }
+        else throw new IllegalArgumentException("El nombre de usuario no está disponible");
+    }
 
+    public boolean login(String username, String password) throws IllegalArgumentException {
+        if (!users.containsKey(username)) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+
+        User user = users.get(username);
+        if (user.getPassword().equals(password)) {
+            return true;  // La contraseña es correcta
+        } else {
+            throw new IllegalArgumentException("La contraseña no es correcta");
+        }
+    }
+
+
+
+    /*
     public void loadUserData(MyFile movFile){
         movFile.openFile('r');
         String input = "";
@@ -28,6 +52,8 @@ public class tracker {
                 }
             }
         }
+
+     */
     }
 
 

@@ -51,6 +51,37 @@ public class User {
     }
 
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ArrayList<Income> getIncomesList() {
+        return incomesList;
+    }
+
+    public void setIncomesList(ArrayList<Income> incomesList) {
+        this.incomesList = incomesList;
+    }
+
+    public ArrayList<Waste> getWastesList() {
+        return wastesList;
+    }
+
+    public void setWastesList(ArrayList<Waste> wastesList) {
+        this.wastesList = wastesList;
+    }
 }
 
 

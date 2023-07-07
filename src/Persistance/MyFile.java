@@ -9,6 +9,7 @@ public class MyFile {
     BufferedWriter bw = null;
     BufferedReader br = null;
 
+
     public MyFile(String nameFile) {
         f = new File(nameFile);
     }

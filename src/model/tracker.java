@@ -1,20 +1,15 @@
 package model;
 
 import Persistance.MyFile;
+import model.User;
 
 import java.util.ArrayList;
 
 public class tracker {
-    ArrayList<Income> incomesList = new ArrayList<Income>();
-    ArrayList<Waste> wastesList = new ArrayList<Waste>();
 
-    public tracker(ArrayList<Income> incomesList, ArrayList<Waste> wastesList) {
-        this.incomesList = incomesList;
-        this.wastesList = wastesList;
-    }
+    String pathFile = "C:/Users/willi/Programacion/Proyectos/CoinTrack";
 
-    public void addIncome(Income income) { incomesList.add(income);}
-    public void addWaste(Waste waste) {wastesList.add(waste);}
+    MyFile file = new MyFile(pathFile);
 
     public void loadUserData(MyFile movFile){
         movFile.openFile('r');
@@ -34,4 +29,5 @@ public class tracker {
             }
         }
     }
-}
+
+

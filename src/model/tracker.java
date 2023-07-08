@@ -9,6 +9,8 @@ public class tracker {
 
     HashMap<String, User> users = new HashMap<String, User>();
     String userName;
+    String usersFilePath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/users.csv";
+    MyFile usersFile = new MyFile(usersFilePath);
     String incomesFilepath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/incomes_" + userName +".csv";
     MyFile incomesFile = new MyFile(incomesFilepath);
     String wastesFilepath =  "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/wastes_" + userName +".csv";
@@ -48,7 +50,7 @@ public class tracker {
         }
     }
 
-    public void loadUserIncomesData(){
+    public ArrayList loadUserIncomesData(){
         incomesFile.openFile('r');
         String input = "";
         String [] incomesData;
@@ -60,9 +62,10 @@ public class tracker {
             incomesList.add(income);
         }
         incomesFile.closeFile();
+        return incomesList;
     }
 
-    public void loadUserWastesData(){
+    public ArrayList loadUserWastesData(){
         wastesFile.openFile('r');
         String input = "";
         String [] wastesData;
@@ -74,8 +77,21 @@ public class tracker {
             wastesList.add(waste);
         }
         wastesFile.closeFile();
+        return wastesList;
     }
 
+    public void loadUsers(){
+        usersFile.openFile('r');
+        String input = "";
+        String [] fields;
+        while ((input = usersFile.read()) !=null){
+            fields = input.split(";");
+            String username = fields[0];
+            String password = fields[1];
+            User user = new User(username, password, loadUserIncomesData(), loadUserWastesData());
+            users.put(username, user);
+        }
+    }
 
     /*
     public void loadUserData(MyFile movFile){

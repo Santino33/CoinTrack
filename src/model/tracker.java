@@ -13,17 +13,17 @@ public class tracker {
     MyFile usersFile = new MyFile(usersFilePath);
     String incomesFilepath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/incomes_" + userName +".csv";
     MyFile incomesFile = new MyFile(incomesFilepath);
+    ArrayList<Income> incomesList = new ArrayList<Income>();
     String wastesFilepath =  "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/wastes_" + userName +".csv";
     MyFile wastesFile = new MyFile(wastesFilepath);
+    ArrayList<Waste> wastesList = new ArrayList<Waste>();
     public tracker(){
 
     }
 
     public void registerUser(String username, String password) throws IllegalArgumentException{
         if (!users.containsKey(username)){
-            ArrayList<Income> incomeList = new ArrayList<Income>();
-            ArrayList<Waste> wastesList = new ArrayList<Waste>();
-            users.put(username, new User(username, password, incomeList, wastesList ));
+            users.put(username, new User(username, password, incomesList, wastesList ));
 
             //Crear archivos CSV para guardar los movimientos
             this.incomesFilepath = "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/incomes_" + username +".csv";
@@ -50,34 +50,31 @@ public class tracker {
         }
     }
 
-    public ArrayList loadUserIncomesData(){
+    //Metodos para cargue de usuarios y listas de los usuarios
+    public void loadUserIncomesData(){
         incomesFile.openFile('r');
         String input = "";
         String [] incomesData;
-        ArrayList<Income> incomesList = new ArrayList<Income>();
 
         while ((input = incomesFile.read()) != null){
             incomesData = input.split(";");
             Income income = new Income(Short.parseShort(incomesData[0]), incomesData[1], Integer.parseInt(incomesData[2]));
-            incomesList.add(income);
+            this.incomesList.add(income);
         }
         incomesFile.closeFile();
-        return incomesList;
     }
 
-    public ArrayList loadUserWastesData(){
+    public void loadUserWastesData(){
         wastesFile.openFile('r');
         String input = "";
         String [] wastesData;
-        ArrayList<Waste> wastesList = new ArrayList<Waste>();
 
         while ((input = incomesFile.read()) != null){
             wastesData = input.split(";");
             Waste waste = new Waste(Short.parseShort(wastesData[0]), wastesData[1], Integer.parseInt(wastesData[2]));
-            wastesList.add(waste);
+            this.wastesList.add(waste);
         }
         wastesFile.closeFile();
-        return wastesList;
     }
 
     public void loadUsers(){
@@ -88,31 +85,68 @@ public class tracker {
             fields = input.split(";");
             String username = fields[0];
             String password = fields[1];
-            User user = new User(username, password, loadUserIncomesData(), loadUserWastesData());
-            users.put(username, user);
+            User user = new User(username, password, incomesList, wastesList);
+            this.users.put(username, user);
         }
     }
 
-    /*
-    public void loadUserData(MyFile movFile){
-        movFile.openFile('r');
-        String input = "";
-        String [] userData;
-        int notRead = 0;
-        while((input = movFile.read()) != null){
-            if (notRead < 3){
-                notRead++;
-            }
-            else {
-                userData = input.split(";");
-                if (Integer.parseInt(userData[2]) > 0){
-                Income income = new Income(Short.parseShort(userData[0]), userData[1],Integer.parseInt(userData[2]));
-                addIncome(income);
-                }
-            }
-        }
+    //Metodos para escritura de archivos
 
-     */
+    public void recordIncomesData(){
+        StringBuilder outputBuilder = new StringBuilder();
+        //Recorrer la lista de ingresos para llenar el StringBuilder
+        for (Income income : this.incomesList) {
+            outputBuilder.append(income.getId()).append(";");
+            outputBuilder.append(income.getName()).append(";");
+            outputBuilder.append(income.getValue()).append(";");
+            outputBuilder.append(System.lineSeparator());
+        }
+        //Crear un string y darle el StringBuilder como valor
+        String output = outputBuilder.toString();
+
+        //Guardar el string en el archivo
+        incomesFile.openFile('w');
+        incomesFile.record(output);
+        incomesFile.closeFile();
+    }
+
+    public void recordWastesData(){
+
+        StringBuilder outputBuilder = new StringBuilder();
+        //Recorrer la lista de ingresos para llenar el StringBuilder
+        for (Waste waste : this.wastesList) {
+            outputBuilder.append(waste.getId()).append(";");
+            outputBuilder.append(waste.getName()).append(";");
+            outputBuilder.append(waste.getValue()).append(";");
+            outputBuilder.append(System.lineSeparator());
+        }
+        //Crear un string y darle el StringBuilder como valor
+        String output = outputBuilder.toString();
+
+        //Guardar el string en el archivo
+        incomesFile.openFile('w');
+        incomesFile.record(output);
+        incomesFile.closeFile();
+    }
+
+    public void recordUsers(){
+        //Crear stringBuilder
+        StringBuilder usersBuilder = new StringBuilder();
+        //Recorrer el Hashmap para obtener el username y contraseña
+        for (int i =0; i<users.size(); i++){
+            usersBuilder.append(users.get(i).getUsername()).append(";");
+            usersBuilder.append(users.get(i).getPassword()).append(";");
+            usersBuilder.append(System.lineSeparator());
+        }
+        //Crear un string y darle el StringBuilder como valor
+        String usersUpdated = usersBuilder.toString();
+        //Guardar
+        usersFile.openFile('w');
+        usersFile.record(usersUpdated);
+        usersFile.closeFile();
+    }
+
+
     }
 
 

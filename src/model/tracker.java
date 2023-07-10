@@ -146,6 +146,17 @@ public class tracker {
         usersFile.closeFile();
     }
 
+    public int getCurrentBalance(){
+        int currentBalance = 0;
+        //Recorrer todos los valores de cada ingreso del usuario
+        for (int i = 0; i < users.get(userName).getIncomesList().size(); i++){
+            currentBalance += users.get(userName).getIncomesList().get(i).getValue();
+        }
+        for (int i = 0; i < users.get(userName).getWastesList().size(); i++){
+            currentBalance -= users.get(userName).getWastesList().get(i).getValue();
+        }
+        return currentBalance;
+    }
 
     }
 

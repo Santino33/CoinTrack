@@ -5,7 +5,7 @@ import Persistance.MyFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class tracker {
+public class Tracker {
 
     HashMap<String, User> users = new HashMap<String, User>();
     String userName;
@@ -17,7 +17,7 @@ public class tracker {
     String wastesFilepath =  "C:/Users/willi/Programacion/Proyectos/CoinTrack/data/wastes_" + userName +".csv";
     MyFile wastesFile = new MyFile(wastesFilepath);
     ArrayList<Waste> wastesList = new ArrayList<Waste>();
-    public tracker(){
+    public Tracker(){
 
     }
 
@@ -156,6 +156,26 @@ public class tracker {
             currentBalance -= users.get(userName).getWastesList().get(i).getValue();
         }
         return currentBalance;
+    }
+
+    public short getMaxId(){
+        short maxId = 0;
+        for(int i = 0; i < incomesList.size(); i++){
+            if (incomesList.get(i).getId() > maxId) maxId = incomesList.get(i).getId();
+        }
+        for(int i = 0; i < wastesList.size(); i++){
+            if (wastesList.get(i).getId() > maxId) maxId = wastesList.get(i).getId();
+        }
+        return maxId;
+    }
+
+    public void addIncome(short id, String name, int value){
+        Income income = new Income(id, name, value);
+        incomesList.add(income);
+    }
+    public void addWaste(short id, String name, int value){
+        Waste waste = new Waste(id, name, value);
+        wastesList.add(waste);
     }
 
     }

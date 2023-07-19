@@ -26,7 +26,7 @@ public class Control {
                     break;
                 case 2: addWaste();
                     break;
-                case 3:
+                case 3: deleteMovement();
                     break;
                 case 4:
                     break;
@@ -48,6 +48,17 @@ public class Control {
         String name= view.readGraphicIncome("Ingrese el nombre del nuevo gasto");
         int value = Integer.parseInt(view.readGraphicIncome("¿Cual sera el valor del nuevo gasto?"));
         tracker.addWaste(currentMaxId, name, value);
+    }
+
+    public void deleteMovement(){
+        short id = view.deleteGraphicMovement();
+        try {
+            tracker.deleteMovement(id);
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+            menu();
+        }
+
     }
 
 

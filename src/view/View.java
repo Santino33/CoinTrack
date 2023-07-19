@@ -35,10 +35,10 @@ public class View {
         return input;
     }
 
-    public int deleteGraphicMovement(){
+    public short deleteGraphicMovement(){
         ImageIcon delete = new ImageIcon("C:/Users/willi/Programacion/Proyectos/CoinTrack/src/view/logout.png");
         String input= JOptionPane.showInputDialog(null, "Digite el id del elemento(ingreso o gasto) que desea eliminar ", "BORRAR MOVIMIENTO", JOptionPane.PLAIN_MESSAGE, scaleImage(delete), null, null).toString();
-        return Integer.parseInt(input);
+        return Short.parseShort(input);
     }
 
     public String[] registerGraphicUser(){

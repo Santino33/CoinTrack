@@ -4,6 +4,7 @@ import Persistance.MyFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Tracker {
 
@@ -178,6 +179,36 @@ public class Tracker {
         wastesList.add(waste);
     }
 
+    public void deleteMovement(short id) throws IllegalArgumentException {
+        boolean deleted = false;
+        Iterator<Income> incomeIterator = incomesList.iterator();
+        while (incomeIterator.hasNext()) {
+            Income income = incomeIterator.next();
+            if (income.getId() == id) {
+                incomeIterator.remove();
+                deleted = true;
+                break;
+            }
+        }
+
+        if (!deleted) {
+            Iterator<Waste> wasteIterator = wastesList.iterator();
+            while (wasteIterator.hasNext()) {
+                Waste waste = wasteIterator.next();
+                if (waste.getId() == id) {
+                    wasteIterator.remove();
+                    deleted = true;
+                    break;
+                }
+            }
+        }
+
+        if (!deleted) {
+            throw new IllegalArgumentException("El ID del movimiento indicado no se encontró: " + id);
+        }
     }
+
+
+}
 
 

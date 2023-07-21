@@ -4,6 +4,8 @@ import model.Tracker;
 import view.View;
 import model.Tracker;
 
+import java.util.ArrayList;
+
 public class Control {
 
     private View view = new View();
@@ -28,12 +30,14 @@ public class Control {
                     break;
                 case 3: deleteMovement();
                     break;
-                case 4:
+                case 4: showIncomesData();
                     break;
-                case 5:
+                case 5: showWastesData();
                     break;
-                case 6:
+                case 6: exit();
                     break;
+                default:
+                    this.view.showGraphicMessage("Opcion invalida");
             }
         } while(option < 1 || option > 6);
     }
@@ -61,6 +65,17 @@ public class Control {
 
     }
 
+    public void showIncomesData(){
+        view.showGraphicMessageBuilder(tracker.getIncomesTable());
+    }
+
+    public void showWastesData(){
+        view.showGraphicMessageBuilder(tracker.getWastesTable());
+    }
+
+    public void exit(){
+
+    }
 
 
 }

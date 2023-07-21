@@ -2,7 +2,10 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 import Persistance.MyFile;
+import model.Movement;
 import model.Tracker;
 
 public class View {
@@ -85,6 +88,7 @@ public class View {
         return output;
     }
 
+
     public int readIntGraphicInput(String message) {
         return Integer.parseInt(JOptionPane.showInputDialog(message));
     }
@@ -95,6 +99,7 @@ public class View {
         JOptionPane.showMessageDialog((Component)null, message);
     }
 
+    public void showGraphicMessageBuilder(StringBuilder message){JOptionPane.showMessageDialog((Component)null, message);}
 
 
 }

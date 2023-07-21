@@ -208,7 +208,120 @@ public class Tracker {
         }
     }
 
+    //Metodos para mostrar tabla de los datos
 
+    public StringBuilder getIncomesTable() {
+        String header = "ID   NOMBRE                           VALOR";
+        StringBuilder output = new StringBuilder(header);
+
+        for (Income move : incomesList) {
+            if (move != null) {
+                String id = String.format("%-4d", move.getId());
+                String name = String.format("%-30s", move.getName());
+                String value = String.format("%.2f", move.getValue());
+                output.append("\n").append(id).append(name).append(value);
+            }
+        }
+
+        return output;
+    }
+
+    public StringBuilder getWastesTable() {
+        String header = "ID   NOMBRE                           VALOR";
+        StringBuilder output = new StringBuilder(header);
+
+        for (Waste move : wastesList) {
+            if (move != null) {
+                String id = String.format("%-4d", move.getId());
+                String name = String.format("%-30s", move.getName());
+                String value = String.format("%.2f", move.getValue());
+                output.append("\n").append(id).append(name).append(value);
+            }
+        }
+
+        return output;
+    }
+
+    //GETTERS AND SETTERS
+    public HashMap<String, User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(HashMap<String, User> users) {
+        this.users = users;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUsersFilePath() {
+        return usersFilePath;
+    }
+
+    public void setUsersFilePath(String usersFilePath) {
+        this.usersFilePath = usersFilePath;
+    }
+
+    public MyFile getUsersFile() {
+        return usersFile;
+    }
+
+    public void setUsersFile(MyFile usersFile) {
+        this.usersFile = usersFile;
+    }
+
+    public String getIncomesFilepath() {
+        return incomesFilepath;
+    }
+
+    public void setIncomesFilepath(String incomesFilepath) {
+        this.incomesFilepath = incomesFilepath;
+    }
+
+    public MyFile getIncomesFile() {
+        return incomesFile;
+    }
+
+    public void setIncomesFile(MyFile incomesFile) {
+        this.incomesFile = incomesFile;
+    }
+
+    public ArrayList<Income> getIncomesList() {
+        return incomesList;
+    }
+
+    public void setIncomesList(ArrayList<Income> incomesList) {
+        this.incomesList = incomesList;
+    }
+
+    public String getWastesFilepath() {
+        return wastesFilepath;
+    }
+
+    public void setWastesFilepath(String wastesFilepath) {
+        this.wastesFilepath = wastesFilepath;
+    }
+
+    public MyFile getWastesFile() {
+        return wastesFile;
+    }
+
+    public void setWastesFile(MyFile wastesFile) {
+        this.wastesFile = wastesFile;
+    }
+
+    public ArrayList<Waste> getWastesList() {
+        return wastesList;
+    }
+
+    public void setWastesList(ArrayList<Waste> wastesList) {
+        this.wastesList = wastesList;
+    }
 }
 
 
